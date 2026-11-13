@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "CocoX.wtf"
+description = "CocoX.wtf browser home with website tabs, search shortcuts, and a games page."
+version = "1.0.0"
+id = "artifacts/cocox-home"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24423
+
+[services.development]
+run = "pnpm --filter @workspace/cocox-home run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/cocox-home", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/cocox-home/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24423"
+BASE_PATH = "/"
