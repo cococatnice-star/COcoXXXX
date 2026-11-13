@@ -17,7 +17,11 @@
     "drizzle-orm": "catalog:",
     "express": "^5.3.0",
     "pino": "^9.14.0",
-    "pino-http": "^10.5.0"
+    "pino-http": "^10.5.0",
+    "@titaniumnetwork-dev/ultraviolet": "^3.2.10",
+    "@mercuryworkshop/epoxy-transport": "^2.1.28",
+    "@mercuryworkshop/bare-mux": "^2.1.9",
+    "wisp-server-node": "^1.1.8"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

@@ -100,6 +100,10 @@ async function buildAll() {
       "puppeteer",
       "puppeteer-core",
       "electron",
+      "@titaniumnetwork-dev/ultraviolet",
+      "@mercuryworkshop/epoxy-transport",
+      "@mercuryworkshop/bare-mux",
+      "wisp-server-node",
     ],
     sourcemap: "linked",
     plugins: [

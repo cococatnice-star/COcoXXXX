@@ -1,12 +1,12 @@
-# CocoX.wtf Browser — Render Static Site
-# Connect this repository to Render and use this Blueprint.
+# CocoX.wtf Browser — Render Node Web Service (Ultraviolet)
 services:
   - type: web
-    name: cocox-wtf-browser
-    runtime: static
-    buildCommand: corepack enable && pnpm install --frozen-lockfile && PORT=10000 BASE_PATH=/ pnpm --filter @workspace/cocox-home build
-    staticPublishPath: ./artifacts/cocox-home/dist/public
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+    name: cocox-wtf-browser-uv
+    runtime: node
+    plan: free
+    buildCommand: pnpm install --no-frozen-lockfile && pnpm --filter @workspace/cocox-home build && pnpm --filter @workspace/api-server build
+    startCommand: pnpm --filter @workspace/api-server start
+    healthCheckPath: /api/healthz
+    envVars:
+      - key: NODE_VERSION
+        value: 22.22.1

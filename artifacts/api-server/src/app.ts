@@ -1,4 +1,8 @@
 import express, { type Express } from "express";
+import path from "node:path";
+import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
+import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
+import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 import cors from "cors";
 import pinoHttp from "pino-http";
 import router from "./routes";
@@ -30,5 +34,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
+
+// Ultraviolet runtime files and the matching BareMux/Epoxy browser transports.
+app.use("/uv/", express.static(uvPath));
+app.use("/epoxy/", express.static(epoxyPath));
+app.use("/baremux/", express.static(baremuxPath));
+
+// Serve the Vite production build from the same Render web service.
+const webRoot = path.resolve(process.cwd(), "artifacts/cocox-home/dist/public");
+app.use(express.static(webRoot));
+app.use((req, res, next) => {
+  if (req.method === "GET" && !req.path.startsWith("/api/") && !req.path.startsWith("/wisp/")) {
+    res.sendFile(path.join(webRoot, "index.html"), (error) => {
+      if (error) next(error);
+    });
+    return;
+  }
+  next();
+});
 
 export default app;
